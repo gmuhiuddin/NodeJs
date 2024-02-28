@@ -4,7 +4,6 @@ import User from '../models/User.mjs';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-
     try {
         const data = await User.find();
 
@@ -12,17 +11,29 @@ router.get('/', async (req, res) => {
     } catch (err) {
         res.send({ msg: err.message });
     }
-
 });
 
 router.get('/login/:email/:password', async (req, res) => {
     try {
+
+        const { params: { email, password } } = req;
+        
         const data = await User.findOne({
-            email: req.params.email,
-            password: req.params.password
+            email
         });
 
-        res.send({ msg: 'user found successfully', data });
+        if (!data) {
+            res.send({ msg: 'email not found!' });
+            return;
+        };
+
+        const isCorrect = await data.comparePassword(password)
+
+        isCorrect ?
+            res.send({ msg: 'user found successfully', data }) :
+            res.send({ msg: 'Incorrect password' });
+        ;
+
     } catch (err) {
         res.send({ msg: err.message });
     }
@@ -36,7 +47,7 @@ router.post('/signup', async (req, res) => {
             ...req.body
         });
 
-        res.send({ msg: 'user added successfully', uid: data._id});
+        res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {
         res.send({ msg: err.message });

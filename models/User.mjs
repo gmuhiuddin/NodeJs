@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
 
 const { Schema, model } = mongoose;
 
@@ -17,6 +18,21 @@ const userSchema = new Schema({
         type: String
     }
 });
+
+userSchema.pre("save", function (next) {
+    const user = this;
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(user.password, salt);
+
+    user.password = hash;
+
+    next();
+});
+
+userSchema.methods.comparePassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 const User = model('users', userSchema);
 
