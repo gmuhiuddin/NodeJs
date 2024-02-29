@@ -57,7 +57,6 @@ router.post('/post', async (req, res) => {
 });
 
 router.put('/put/:id', async (req, res) => {
-
     try {
         await Ads.findByIdAndUpdate(req.params.id, req.body);
 
@@ -65,7 +64,6 @@ router.put('/put/:id', async (req, res) => {
     } catch (err) {
         res.send({ msg: err.message })
     };
-
 });
 
 router.delete('/remove/:id', async (req, res) => {
