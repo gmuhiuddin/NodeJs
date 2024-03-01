@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3001;
 
 db.connection.once('open', () => {
