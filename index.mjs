@@ -1,7 +1,8 @@
 import express from 'express';
 import routes from './routes/index.mjs';
 import db  from './config/db.mjs';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
+import cors from 'cors';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ db.connection.once('open', () => {
 .on('error', (error) => {
     console.log("error", error.message);
 });
+
+app.use(cors());
 
 app.listen(port, () => {
     console.log('Server is responding');
