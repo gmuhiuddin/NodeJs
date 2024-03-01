@@ -11,10 +11,6 @@ const AdsSchema = new Schema({
         required: true,
         type: String
     },
-    amount: {
-        required: true,
-        type: Number
-    },
     category: {
         required: true,
         type: String
