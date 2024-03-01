@@ -15,7 +15,8 @@ const userSchema = new Schema({
     },
     password: {
         require: true,
-        type: String
+        type: String,
+        minlenght: 6
     }
 });
 
@@ -32,6 +33,13 @@ userSchema.pre("save", function (next) {
 
 userSchema.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.password);
+};
+
+userSchema.methods.updatePassword = async function (password) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    return hash;
 };
 
 const User = model('users', userSchema);

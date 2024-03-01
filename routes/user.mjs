@@ -17,7 +17,7 @@ router.get('/login/:email/:password', async (req, res) => {
     try {
 
         const { params: { email, password } } = req;
-        
+
         const data = await User.findOne({
             email
         });
@@ -48,6 +48,28 @@ router.post('/signup', async (req, res) => {
         });
 
         res.send({ msg: 'user added successfully', uid: data._id });
+
+    } catch (err) {
+        res.send({ msg: err.message });
+    }
+});
+
+router.put('/updatepass/:email/:newPass', async (req, res) => {
+
+    try {
+        const { params: { email, newPass } } = req;
+
+        const data = await User.findOne({
+            email
+        });
+
+        const updatedPass = await data.updatePassword(newPass);
+
+        await User.findByIdAndUpdate(data._id, {
+            password: updatedPass
+        })
+
+        res.send({ msg: 'Password updated successfully' });
 
     } catch (err) {
         res.send({ msg: err.message });
