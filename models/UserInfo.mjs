@@ -13,7 +13,8 @@ const userInfoSchema = new Schema({
     },
     userEmail: {
         require: true,
-        type: String
+        type: String,
+        unique: true
     },
     userImg: String,
     cartsIdForBasket: {

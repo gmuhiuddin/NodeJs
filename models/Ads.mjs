@@ -59,6 +59,11 @@ const AdsSchema = new Schema({
         required: true,
         type: String
     },
+    userEmail:{
+        required: true,
+        type: String,
+        unique: true
+    },
     userId: {
         required: true,
         type: String
