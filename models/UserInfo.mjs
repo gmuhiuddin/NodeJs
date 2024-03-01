@@ -21,6 +21,11 @@ const userInfoSchema = new Schema({
         require: true,
         type: Array
     },
+    _id: {
+        require: true,
+        type: String,
+        unique: true 
+    }
 });
 
 const UserInfo = model('userinfos', userInfoSchema);
