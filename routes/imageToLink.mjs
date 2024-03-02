@@ -4,7 +4,7 @@ import imageConversion from 'image-conversion'
 const router = express.Router();
 
 router.get('/:img', async (req, res) => {
-    const { params: { img : file } } = req;
+    const { params: { file : img } } = req;
     console.log(file);
     const data = await imageConversion.compressAccurately(file,200);
 
