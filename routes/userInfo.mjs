@@ -40,6 +40,17 @@ router.post('/post', async (req, res) => {
 
 });
 
+router.put('/put/:id', async (req, res) => {
+    try {
+        await UserInfo.findByIdAndUpdate(req.params.id ,req.body);
+
+        res.send({ msg: 'user updated successfully'});
+    } catch (err) {
+        res.send({ msg: err.message });
+    }
+
+});
+
 // router.post('/signup', async (req, res) => {
 
 //     try {
