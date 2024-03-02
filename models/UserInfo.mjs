@@ -21,7 +21,7 @@ const userInfoSchema = new Schema({
         require: true,
         type: Array
     },
-    _id: {
+    "_id": {
         require: true,
         type: String,
         unique: true 
