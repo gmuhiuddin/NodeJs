@@ -19,7 +19,10 @@ router.get('/:id', async (req, res) => {
     try {
         const data = await UserInfo.findById(req.params.id);
 
-        res.send({ msg: 'user info found successfully', data });
+data ?
+res.send({ msg: 'user info found successfully', data })
+:
+res.send( {msg: 'Data not found'} );
     } catch (err) {
         res.send({ msg: err.message });
     }
