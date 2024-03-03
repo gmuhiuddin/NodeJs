@@ -1,26 +1,35 @@
 import express from 'express';
-import imageConversion from 'image-conversion';
+import base64Img from 'base64-img';
 
 const router = express.Router();
 
+function convertImageToUrl(imagePath) {
+    return new Promise((resolve, reject) => {
+      // Convert image to base64
+      base64Img.base64(imagePath, (err, data) => {
+        if (err) {
+          reject(err); // Pass the error to the caller
+        } else {
+          // Create data URL
+          const dataUrl = `data:image/png;base64,${data}`;
+          resolve(dataUrl); // Resolve with the data URL
+        }
+      });
+    });
+  }
+
 router.get('/', async (req, res) => {
-    // const { params: { file : img } } = req;
-    // console.log(file);
-    // const data = await imageConversion.compressAccurately(file,200);
-
-    // console.log(data);
-
     res.json({ msg: "image convert successfully" })
 });
 
-router.get('/:img', async (req, res) => {
+router.get('/:imagePath', async (req, res) => {
 
-    const { params: { img: file } } = req;
+    const { params: { imagePath  } } = req;
 
     try {
-        const data = await imageConversion.compressAccurately(file, 200);
-
-        res.send({ "msg": "file converted successfully", file: data })
+        const url = await convertImageToUrl(`../../Desktop/Pictures/Saved Pictures${imagePath}`);
+        
+        res.send({ "msg": "file converted successfully", url})
     } catch (err) {
         res.send({ msg: err.message });
     };
