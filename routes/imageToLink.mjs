@@ -1,5 +1,5 @@
 import express from 'express';
-import imageConversion from 'image-conversion';
+
 
 const router = express.Router();
 
@@ -14,16 +14,15 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:img', async (req, res) => {
-    
+
+    const { params: { img: file } } = req;
+
     try {
-        const { params: { img: file } } = req;
-
-        const data = await imageConversion.compressAccurately(file, 200);
-
-        res.json({ msg: "image convert successfully", url: data });
+        res.send({ "msg": "file converted successfully" })
     } catch (err) {
-        res.json({ msg: err.message });
-    }
+        res.send({ msg: err.message });
+    };
+
 });
 
 export default router;
