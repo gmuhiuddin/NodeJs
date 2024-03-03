@@ -3,16 +3,6 @@ import User from '../models/User.mjs';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    try {
-        const data = await User.find();
-
-        res.send({ msg: 'user found successfully', data });
-    } catch (err) {
-        res.send({ msg: err.message });
-    }
-});
-
 router.get('/login/:email/:password', async (req, res) => {
     try {
 
