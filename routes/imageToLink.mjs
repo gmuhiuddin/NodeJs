@@ -18,7 +18,8 @@ router.get('/:img', async (req, res) => {
     const { params: { img: file } } = req;
 
     try {
-        res.send({ "msg": "file converted successfully" })
+
+        res.send({ "msg": "file converted successfully", file: file })
     } catch (err) {
         res.send({ msg: err.message });
     };
