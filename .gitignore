@@ -1,6 +1,7 @@
-# Ignore files and directories
-*.log
-/node_modules
-/build/
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
 
+# .env files
 .env
