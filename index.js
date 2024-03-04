@@ -1,6 +1,6 @@
 import express from 'express';
-import routes from './routes/index.mjs';
-import db  from './config/db.mjs';
+import routes from './routes/index.js';
+import db  from './config/db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 

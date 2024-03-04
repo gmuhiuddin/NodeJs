@@ -1,11 +1,12 @@
 {
+  "type": "module",
   "name": "nodejs---copy",
   "version": "1.0.0",
-  "main": "index.mjs",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.mjs",
-    "dev": "nodemon index.mjs"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

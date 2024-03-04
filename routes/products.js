@@ -1,5 +1,5 @@
 import express from 'express';
-import Ads from '../models/Ads.mjs';
+import Ads from '../models/Ads.js';
 
 const router = express.Router();
 

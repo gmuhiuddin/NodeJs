@@ -1,8 +1,8 @@
 import express from 'express';
-import products from './products.mjs';
-import productId from './productId.mjs';
-import user from './user.mjs';
-import UserInfo from './userInfo.mjs';
+import products from './products.js';
+import productId from './productId.js';
+import user from './user.js';
+import UserInfo from './userInfo.js';
 
 const router = express.Router();
 
