@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-mongoose.connect('mongodb+srv://gMuhiuddin:786Muhiuddin786@cluster0.xdif6qu.mongodb.net/Olx');
+dotenv.config();
+
+mongoose.connect(process.env.Connection_String);
 
 export default mongoose;
