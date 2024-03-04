@@ -3,6 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-mongoose.connect(process.env.Connection_String);
+mongoose.connect(process.env.OLX_Connection_String);
 
 export default mongoose;
