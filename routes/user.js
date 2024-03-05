@@ -1,7 +1,32 @@
 import express from "express";
+import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 import User from '../models/User.js';
 
 const router = express.Router();
+dotenv.config();
+
+const sendOtp = async (email, code) => {
+
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: process.env.Smtp_User_Name,
+          pass: process.env.Smtp_Password,
+        },
+      });
+
+      const info = await transporter.sendMail({
+        from: '"OLX-clone-verification department" <olx.clone.veri.email>', // sender address
+        to: email, // list of receivers
+        subject: "Verification code", // Subject line
+        text: `Your verification code is ${code}`, // plain text body
+        html: `<b>Your verification code is <a>${code}</a></b>`, // html body
+      });
+    
+      return info.messageId;
+};
 
 router.get('/login/:email/:password', async (req, res) => {
     try {
@@ -44,6 +69,29 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+router.put('/sendemail/:email/:otp', async (req, res) => {
+
+    try {
+        const { params: { email, otp } } = req;
+
+        const data = await User.findOne({
+            email
+        });
+
+        if(!data){
+            res.send({ msg: 'Email not found', complete: false });
+            return;
+        };
+
+        const messageId = await sendOtp(email, otp);
+
+        res.send({ msg: 'Otp send successfully on email', messageId, complete: true });
+
+    } catch (err) {
+        res.send({ msg: err.message, complete: false });
+    }
+});
+        
 router.put('/updatepass/:email/:newPass', async (req, res) => {
 
     try {
@@ -53,16 +101,17 @@ router.put('/updatepass/:email/:newPass', async (req, res) => {
             email
         });
 
-        const updatedPass = await data.updatePassword(newPass);
+const updatedPass = await data.updatePassword(newPass);
 
-        await User.findByIdAndUpdate(data._id, {
-            password: updatedPass
-        })
+await User.findByIdAndUpdate(data._id, {
+    password: updatedPass
+})
 
-        res.send({ msg: 'Password updated successfully' });
+res.send({ msg: 'Password updated successfully', complete: true });
+
 
     } catch (err) {
-        res.send({ msg: err.message });
+        res.send({ msg: err.message, complete: false });
     }
 });
 
