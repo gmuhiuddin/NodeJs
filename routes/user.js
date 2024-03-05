@@ -22,7 +22,7 @@ const sendOtp = async (email, code) => {
         to: email,
         subject: "Verification code", // Subject line
         text: `Your verification code is ${code}`, // plain text body
-        html: `<b>Your verification code is <a>${code}</a></b>`, // html body
+        html: `<b>Your verification code is <a href="#">${code}</a></b>`, // html body
       });
     
       return info.messageId;
@@ -69,7 +69,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-router.put('/sendemail/:email/:otp', async (req, res) => {
+router.get('/sendemail/:email/:otp', async (req, res) => {
 
     try {
         const { params: { email, otp } } = req;
