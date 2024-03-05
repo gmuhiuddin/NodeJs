@@ -18,8 +18,8 @@ const sendOtp = async (email, code) => {
       });
 
       const info = await transporter.sendMail({
-        from: '"OLX-clone-verification department" <olx.clone.veri.email>', // sender address
-        to: email, // list of receivers
+        from: '"OLX-clone-verification department" <olx.clone.veri.email>',
+        to: email,
         subject: "Verification code", // Subject line
         text: `Your verification code is ${code}`, // plain text body
         html: `<b>Your verification code is <a>${code}</a></b>`, // html body
