@@ -12,20 +12,20 @@ const sendOtp = async (email, code) => {
         host: "smtp.gmail.com",
         port: 587,
         auth: {
-          user: process.env.Smtp_User_Name,
-          pass: process.env.Smtp_Password,
+            user: process.env.Smtp_User_Name,
+            pass: process.env.Smtp_Password,
         },
-      });
+    });
 
-      const info = await transporter.sendMail({
+    const info = await transporter.sendMail({
         from: '"OLX-clone-verification-department" <olx.clone.veri.email>',
         to: email,
         subject: "Verification code", // Subject line
         text: `Your verification code is ${code}`, // plain text body
         html: `<b>Your verification code is <a href="#">${code}</a></b>`, // html body
-      });
-    
-      return info.messageId;
+    });
+
+    return info.messageId;
 };
 
 router.get('/login/:email/:password', async (req, res) => {
@@ -78,7 +78,7 @@ router.get('/sendemail/:email/:otp', async (req, res) => {
             email
         });
 
-        if(!data){
+        if (!data) {
             res.send({ msg: 'Email not found', complete: false });
             return;
         };
@@ -91,7 +91,7 @@ router.get('/sendemail/:email/:otp', async (req, res) => {
         res.send({ msg: err.message, complete: false });
     }
 });
-        
+
 router.put('/updatepass/:email/:newPass', async (req, res) => {
 
     try {
@@ -101,13 +101,11 @@ router.put('/updatepass/:email/:newPass', async (req, res) => {
             email
         });
 
-const updatedPass = await data.updatePassword(newPass);
+        data.password = newPass;
 
-await User.findByIdAndUpdate(data._id, {
-    password: updatedPass
-})
+        await data.save()
 
-res.send({ msg: 'Password updated successfully', complete: true });
+        res.send({ msg: 'Password updated successfully', complete: true });
 
 
     } catch (err) {
