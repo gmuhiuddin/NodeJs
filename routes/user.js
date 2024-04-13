@@ -62,10 +62,10 @@ router.post('/signup', async (req, res) => {
             ...req.body
         });
 
-        res.send({ msg: 'user added successfully', uid: data._id, success: true });
+        res.send({ msg: 'user added successfully', uid: data._id});
 
     } catch (err) {
-        res.send({ msg: err.message, success: false });
+        res.send({ msg: err.message});
     }
 });
 
