@@ -51,11 +51,10 @@ router.put('/login', async (req, res) => {
         data.tokens.push(token);
 
         await data.save();
-
-        res.cookie('token', token, {
-            httpOnly: true
-        });
-        res.send({ msg: 'user found successfully', uid: data._id })
+        
+        res.cookie('jwtoken', token);
+        
+        res.send({ msg: 'user found successfully', uid: data._id });
 
     } catch (err) {
         res.send({ msg: err.message });
@@ -80,7 +79,7 @@ router.post('/signup', async (req, res) => {
 
         // ab token ko db mai save karana hai
 
-        res.cookie('token', token);
+        res.cookie('jwtoken', token);
         res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {
@@ -99,7 +98,7 @@ router.put('/logout', verifyToken, async (req, res) => {
             }
         });
 
-        res.clearCookie('token');
+        res.clearCookie('jwtoken');
         res.send({ msg: 'user logout successfully' })
     } catch (err) {
         res.send({ msg: err.message });

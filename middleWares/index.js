@@ -7,9 +7,9 @@ dotenv.config();
 const verifyToken = async (req, res, next) => {
 
     try {
-        const token = req.cookies?.token;
+        const token = req.cookies?.jwtoken;
 
-        if (!token) return res.status(400).send({ msg: "Invalid token!" });
+        if (!token) return res.status(400).send({ msg: "Token Not found!" });
 
         const secret = process.env.jwt_Secret;
 

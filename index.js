@@ -10,16 +10,16 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cookieParser());
-app.use(cors());
-app.use(express.json());
-
 db.connection.once('open', () => {
     console.log("Db is connected");
 })
 .on('error', (error) => {
     console.log("error", error.message);
 });
+
+app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
 
 app.listen(port, () => {
     console.log('Server is responding');
