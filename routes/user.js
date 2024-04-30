@@ -52,7 +52,7 @@ router.put('/login', async (req, res) => {
 
         await data.save();
 
-        res.cookie('token', token, { path: 'http://localhost:5173/' });
+        res.cookie('token', token);
         res.send({ msg: 'user found successfully', uid: data._id })
 
     } catch (err) {
@@ -78,7 +78,7 @@ router.post('/signup', async (req, res) => {
 
         // ab token ko db mai save karana hai
 
-        res.cookie('token', token, { path: 'http://localhost:5173/' });
+        res.cookie('token', token);
         res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {
