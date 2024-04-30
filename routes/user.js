@@ -97,7 +97,7 @@ router.put('/logout', verifyToken, async (req, res) => {
             }
         });
 
-        res.clearCookie('token');
+        res.clearCookie('token', { path: 'http://localhost:5173' });
         res.send({ msg: 'user logout successfully' })
     } catch (err) {
         res.send({ msg: err.message });
