@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import User from '../models/User.js';
-import { logoutMiddleWare } from '../middleWares/logoutMiddleWare.js'
+import { verifyToken } from '../middleWares/index.js'
 
 const router = express.Router();
 dotenv.config();
@@ -31,7 +31,6 @@ const sendOtp = async (email, code) => {
 
 router.put('/login', async (req, res) => {
     try {
-
         const { body: { email, password } } = req;
 
         const data = await User.findOne({
@@ -53,7 +52,8 @@ router.put('/login', async (req, res) => {
 
         await data.save();
 
-        res.send({ msg: 'user found successfully', uid: data._id, token })
+        res.cookie('token', token);
+        res.send({ msg: 'user found successfully', uid: data._id })
 
     } catch (err) {
         res.send({ msg: err.message });
@@ -74,33 +74,44 @@ router.post('/signup', async (req, res) => {
 
         data.tokens.push(token);
 
-        await data.save()
+        await data.save();
+
         // ab token ko db mai save karana hai
 
-        res.send({ msg: 'user added successfully', uid: data._id, token });
+        res.cookie('token', token);
+        res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {
         res.send({ msg: err.message });
     }
 });
 
-router.put('/logout', logoutMiddleWare, async (req, res) => {
+router.put('/logout', verifyToken, async (req, res) => {
     try {
 
-        const { uid, token } = req;
+        const { user: { _id: uid }, tokenForRemove } = req;
 
         await User.findByIdAndUpdate(uid, {
             $pull: {
-                tokens: token
+                tokens: tokenForRemove
             }
         });
 
+        res.clearCookie('token');
         res.send({ msg: 'user logout successfully' })
-
     } catch (err) {
         res.send({ msg: err.message });
     }
 
+});
+
+router.get('/checktoken', verifyToken, async (req, res) => {
+    try {
+        res.send({ msg: 'user find successfully', user: req.user });
+
+    } catch (err) {
+        res.send({ msg: err.message });
+    }
 });
 
 router.get('/sendemail/:email/:otp', async (req, res) => {

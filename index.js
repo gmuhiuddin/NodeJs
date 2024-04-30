@@ -3,6 +3,7 @@ import routes from './routes/index.js';
 import db  from './config/db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ db.connection.once('open', () => {
 });
 
 app.use(cors());
+app.use(cookieParser());
 
 app.listen(port, () => {
     console.log('Server is responding');
