@@ -17,9 +17,12 @@ db.connection.once('open', () => {
     console.log("error", error.message);
 });
 
-app.use(cors());
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+    origin: ['https://olx-clone-b4869.web.app/','http://localhost:5173'],
+  credentials: true
+}));
 
 app.listen(port, () => {
     console.log('Server is responding');
