@@ -20,7 +20,7 @@ db.connection.once('open', () => {
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-    origin: [ 'http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://olx-node-js-mongo-db.vercel.app/'],
     credentials: true
 }));
 
