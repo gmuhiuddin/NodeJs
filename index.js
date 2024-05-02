@@ -19,10 +19,7 @@ db.connection.once('open', () => {
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({
-    origin: 'https://olx-node-js-mongo-db.vercel.app', // Set the allowed origin
-    credentials: true
-  }));
+app.use(cors());
 
 app.use('/', routes);
 
