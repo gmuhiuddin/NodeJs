@@ -52,12 +52,7 @@ router.put('/login', async (req, res) => {
 
         await data.save();
 
-        res.cookie('jwtoken', token, {
-            httpOnly: true,
-            secure: false, // Since it's not HTTPS locally
-            sameSite: 'None', // Or you can omit this attribute if not required
-            domain: 'localhost',
-        });
+        res.cookie('jwtoken', token);
 
         res.send({ msg: 'user found successfully', uid: data._id });
 
