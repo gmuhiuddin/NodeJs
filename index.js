@@ -19,12 +19,10 @@ db.connection.once('open', () => {
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
-
-app.use('/bla', (req, res) => {
-    res.cookie('bla', 'blaa', {httpOnly: true})
-    res.send({msg: 'Cookie was seted'})
-})
+app.use(cors({
+    origin: ["http://localhost:5173/"],
+  credentials: true
+}));
 
 app.use('/', routes);
 
