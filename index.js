@@ -23,7 +23,7 @@ app.use(cors());
 
 app.use('/bla', (req, res) => {
     res.cookie('bla', 'blaa')
-    res.send('Cookie was seted')
+    res.send({msg: 'Cookie was seted'})
 })
 
 app.use('/', routes);
