@@ -114,7 +114,7 @@ router.put('/logout', verifyToken, async (req, res) => {
 
 router.get('/checktoken', verifyToken, async (req, res) => {
     try {
-        res.send({ msg: 'user find successfully', user: req.user });
+        res.send({ msg: 'user find successfully', uid: req.user._id });
 
     } catch (err) {
         res.send({ msg: err.message });
