@@ -52,7 +52,10 @@ router.put('/login', async (req, res) => {
 
         await data.save();
 
-        res.cookie('jwtoken', token);
+        res.cookie('jwtoken', token, {
+            httpOnly: true,
+            sameSite: "none"
+        });
 
         res.send({ msg: 'user found successfully', uid: data._id });
 
