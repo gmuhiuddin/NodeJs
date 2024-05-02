@@ -54,8 +54,8 @@ router.put('/login', async (req, res) => {
 
         res.cookie('jwtoken', token, {
             httpOnly: true,
-  secure: true, // Set to true if your website is served over HTTPS
-  sameSite: 'None',
+            secure: true, // Set to true if your website is served over HTTPS
+            sameSite: 'None',
         });
 
         res.send({ msg: 'user found successfully', uid: data._id });
