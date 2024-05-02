@@ -13,13 +13,18 @@ const port = process.env.PORT || 3001;
 db.connection.once('open', () => {
     console.log("Db is connected");
 })
-.on('error', (error) => {
+    .on('error', (error) => {
         console.log("error", error.message);
-});
+    });
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
+
+app.use('/bla', (req, res) => {
+    res.cookie('bla', 'blaa')
+    res.send('Cookie was seted')
+})
 
 app.use('/', routes);
 
