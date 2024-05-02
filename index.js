@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/bla', (req, res) => {
-    res.cookie('bla', 'blaa')
+    res.cookie('bla', 'blaa', {httpOnly: true})
     res.send({msg: 'Cookie was seted'})
 })
 
