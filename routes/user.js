@@ -51,9 +51,9 @@ router.put('/login', async (req, res) => {
         data.tokens.push(token);
 
         await data.save();
-        
-        res.cookie('jwtoken', token);
-        
+
+        res.cookie('jwtoken', token, { httpOnly: true });
+
         res.send({ msg: 'user found successfully', uid: data._id });
 
     } catch (err) {
@@ -79,7 +79,9 @@ router.post('/signup', async (req, res) => {
 
         // ab token ko db mai save karana hai
 
-        res.cookie('jwtoken', token);
+        console.log(token);
+
+        res.cookie('jwtoken', token, { httpOnly: true });
         res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {

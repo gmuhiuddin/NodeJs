@@ -13,19 +13,19 @@ const port = process.env.PORT || 3001;
 db.connection.once('open', () => {
     console.log("Db is connected");
 })
-    .on('error', (error) => {
+.on('error', (error) => {
         console.log("error", error.message);
-    });
+});
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://olx-node-js-mongo-db.vercel.app/'],
+    origin: ['https://olx-node-js-mongo-db.vercel.app', 'http://localhost:5173'], // Set the allowed origin
     credentials: true
-}));
+  }));
+
+app.use('/', routes);
 
 app.listen(port, () => {
     console.log('Server is responding');
 });
-
-app.use('/', routes);
