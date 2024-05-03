@@ -54,6 +54,7 @@ router.put('/login', async (req, res) => {
 
         res.cookie('jwtoken', token, {
             httpOnly: true,
+            secure: true,
             sameSite: 'None',
         });
 
