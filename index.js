@@ -24,8 +24,8 @@ app.use(cors({
     credentials: true
 }));
 
-app.use('/', routes);
-
 app.listen(port, () => {
     console.log('Server is responding');
 });
+
+app.use('/', routes);

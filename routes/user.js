@@ -83,8 +83,6 @@ router.post('/signup', async (req, res) => {
 
         // ab token ko db mai save karana hai
 
-        console.log(token);
-
         res.cookie('jwtoken', token, {
             httpOnly: true,
             secure: true,
