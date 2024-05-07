@@ -85,7 +85,11 @@ router.post('/signup', async (req, res) => {
 
         console.log(token);
 
-        res.cookie('jwtoken', token, { httpOnly: true });
+        res.cookie('jwtoken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+        });
         res.send({ msg: 'user added successfully', uid: data._id });
 
     } catch (err) {
