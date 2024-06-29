@@ -1,33 +1,10 @@
 import express from "express";
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
 import User from '../models/User.js';
 import { verifyToken } from '../middleWares/index.js'
 
 const router = express.Router();
 dotenv.config();
-
-const sendOtp = async (email, code) => {
-
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        auth: {
-            user: process.env.Smtp_User_Name,
-            pass: process.env.Smtp_Password,
-        },
-    });
-
-    const info = await transporter.sendMail({
-        from: '"OLX-clone-verification-department" <olx.clone.veri.email>',
-        to: email,
-        subject: "Verification code", // Subject line
-        text: `Your verification code is ${code}`, // plain text body
-        html: `<b>Your verification code is <a href="#">${code}</a></b>`, // html body
-    });
-
-    return info.messageId;
-};
 
 router.put('/login', async (req, res) => {
     try {
@@ -120,29 +97,6 @@ router.get('/checktoken', verifyToken, async (req, res) => {
 
     } catch (err) {
         res.send({ msg: err.message });
-    }
-});
-
-router.get('/sendemail/:email/:otp', async (req, res) => {
-
-    try {
-        const { params: { email, otp } } = req;
-
-        const data = await User.findOne({
-            email
-        });
-
-        if (!data) {
-            res.send({ msg: 'Email not found', complete: false });
-            return;
-        };
-
-        const messageId = await sendOtp(email, otp);
-
-        res.send({ msg: 'Otp send successfully on email', messageId, complete: true });
-
-    } catch (err) {
-        res.send({ msg: err.message, complete: false });
     }
 });
 
