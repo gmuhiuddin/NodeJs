@@ -10,5 +10,6 @@ router.use('/products', products);
 router.use('/productid', productId);
 router.use('/user', user);
 router.use('/userinfo', userInfo);
+router.use('/verify-code', verificationCode);
 
 export default router;
